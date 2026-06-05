@@ -1,0 +1,83 @@
+filters:
+  and:
+    - file.inFolder("hypotheses/datasets/cards")
+    - file.ext == "md"
+properties:
+  file.name:
+    displayName: כרטיס
+  dataset_name:
+    displayName: דאטהסט
+  pilot_priority:
+    displayName: עדיפות פיילוט
+  pilot_value:
+    displayName: ערך לפיילוט
+  corpus_availability_status:
+    displayName: זמינות קורפוס
+  domain:
+    displayName: תחום
+  document_source_type:
+    displayName: סוג מסמכים
+  question_count:
+    displayName: כמות שאלות
+  document_count:
+    displayName: כמות מסמכים
+  expected_grounding_classes:
+    displayName: מחלקות קרקוע צפויות
+  document_content_availability:
+    displayName: זמינות תוכן מסמכים
+  dataset_download_url:
+    displayName: קישור דאטהסט
+  corpus_download_url:
+    displayName: קישור קורפוס
+  blocking_questions:
+    displayName: שאלות חוסמות
+  normalization_risks:
+    displayName: סיכוני נרמול
+views:
+  - type: table
+    name: Pilot essentials
+    groupBy:
+      property: pilot_priority
+      direction: ASC
+    order:
+      - file.name
+      - dataset_name
+      - pilot_priority
+      - pilot_value
+      - corpus_availability_status
+      - domain
+      - document_source_type
+      - expected_grounding_classes
+      - question_count
+      - document_count
+      - blocking_questions
+    columnSize:
+      note.pilot_priority: 112
+  - type: table
+    name: Fetch feasibility
+    groupBy:
+      property: pilot_priority
+      direction: ASC
+    order:
+      - file.name
+      - dataset_name
+      - pilot_priority
+      - corpus_availability_status
+      - document_content_availability
+      - dataset_download_url
+      - corpus_download_url
+      - normalization_risks
+      - blocking_questions
+  - type: table
+    name: Priority 1
+    filters:
+      and:
+        - pilot_priority == 1
+    order:
+      - file.name
+      - dataset_name
+      - pilot_priority
+      - pilot_value
+      - corpus_availability_status
+      - expected_grounding_classes
+      - blocking_questions

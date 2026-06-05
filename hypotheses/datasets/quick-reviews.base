@@ -1,0 +1,67 @@
+filters:
+  and:
+    - file.inFolder("hypotheses/datasets/quick_reviews")
+    - file.ext == "md"
+    - file.name != "README"
+properties:
+  file.name:
+    displayName: קובץ
+  dataset_name:
+    displayName: דאטהסט
+  review_status:
+    displayName: סטטוס סקירה
+  pilot_decision:
+    displayName: החלטת פיילוט
+  final_thesis_decision:
+    displayName: החלטת תזה
+  primary_reason:
+    displayName: סיבת החלטה
+  relevance_summary:
+    displayName: רלוונטיות
+  domain:
+    displayName: תחום
+  source_type:
+    displayName: סוג מקור
+  corpus_availability_status:
+    displayName: זמינות קורפוס
+  next_action:
+    displayName: פעולה הבאה
+  sources:
+    displayName: מקורות
+views:
+  - type: table
+    name: Decision table
+    groupBy:
+      property: pilot_decision
+      direction: ASC
+    order:
+      - file.name
+      - dataset_name
+      - review_status
+      - pilot_decision
+      - final_thesis_decision
+      - primary_reason
+      - relevance_summary
+      - corpus_availability_status
+      - next_action
+  - type: table
+    name: Revisit later
+    filters:
+      or:
+        - pilot_decision == "defer"
+        - final_thesis_decision == "possible_boundary_or_control"
+    order:
+      - dataset_name
+      - primary_reason
+      - relevance_summary
+      - next_action
+  - type: table
+    name: Excluded from first pilot
+    filters:
+      and:
+        - pilot_decision != "include_first_pilot"
+    order:
+      - dataset_name
+      - pilot_decision
+      - primary_reason
+      - final_thesis_decision
